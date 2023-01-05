@@ -30,6 +30,10 @@ def explore_df(df):
     print('')
     print('Grouped_DF')
 
+    print('')
+    print('Number of Users with 5+ Games')
+    print(len(df_grouped[df_grouped['num_games'] >= 5]))
+
 def main():
     with open('config.json') as cfg_file:
         cfg = json.load(cfg_file)

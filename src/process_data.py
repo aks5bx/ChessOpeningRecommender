@@ -21,6 +21,14 @@ def unpack_game(data_lst):
     Takes a list of lines and returns a dictionary of game data
     '''
 
+    if ('White' not in data_lst[4]) or ('WhiteElo' not in data_lst[9]):
+        return None
+        #print('ERROR')
+        #print('')
+        #print(data_lst)
+        #print('')
+        #print(data_lst[4])
+
     username_w = get_substring('\"', '\"', data_lst[4])
     userelo_w = get_substring('\"', '\"', data_lst[9])
 
@@ -48,6 +56,7 @@ def load_games(cfg):
         i = 0
         program_starts = time.time()
         while True:
+
             ## Track the while loop
             if i % 5000000 == 0:
                 print(round(((i * 20) /cfg[dataset]['num_lines']) * 100, 2), '% Complete')
@@ -66,6 +75,10 @@ def load_games(cfg):
 
             ## Unpack game data and add to dictionary
             game_data = unpack_game(next_n_lines)
+
+            if game_data is None: 
+                continue 
+
             game_dict[game_id] = game_data
             game_id += 1
 
