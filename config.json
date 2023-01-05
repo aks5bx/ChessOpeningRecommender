@@ -1,0 +1,11 @@
+{
+    "live_run":{
+        "dataset": "2019_06", 
+        "dataset_file" : "data/lichess_2019_06.pgn"
+    }, 
+
+    "2019_06":{
+        "num_games": 33935786 ,
+        "num_lines" : 678984443
+    }
+}
