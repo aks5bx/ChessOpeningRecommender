@@ -38,6 +38,7 @@ We use Python version >= 3.8
 
 ## Repository Structure 
 
+```
 [ROOT]
 │
 └───data 
@@ -59,6 +60,7 @@ We use Python version >= 3.8
 └───requirements.txt
 │
 └───README.md
+```
 
 # Data Processing 
 
