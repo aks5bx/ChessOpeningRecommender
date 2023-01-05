@@ -20,13 +20,13 @@ This general goal of this project is to, for any active lichess user:
 
 ## Tasks 
 
-[x] Develop overal goal/plan
-[ ] Formalize data pipeline 
-[ ] Data storage 
-[ ] Feature Engineering 
-[ ] Similarity Scoring 
-[ ] Recommender System 
-[ ] Front End/Serving 
+- [x] Develop overal goal/plan
+- [ ] Formalize data pipeline 
+- [ ] Data storage 
+- [ ] Feature Engineering 
+- [ ] Similarity Scoring 
+- [ ] Recommender System 
+- [ ] Front End/Serving 
 
 # Setup
 
