@@ -6,13 +6,25 @@ Tags: Chess, Recommender Systems
 
 # Overview 
 
+## General Goal
+
 This general goal of this project is to, for any active lichess user: 
 1. Understand their style of play 
 2. Approximate their style of play to that of other lichess users 
 3. Use play style similarity information to power a recommender system that recommends what opening a user should play based on 
-    a. What players with similar playing styles play 
-    b. What players with similar playing styles play AND have success with 
+- What players with similar playing styles play 
+- What players with similar playing styles play AND have success with 
 4. Use play style similarity information to assign every user a "Celeb GM/IM" they are most similar to.  
+
+## Tasks 
+
+[x] Develop overal goal/plan
+[ ] Formalize data pipeline 
+[ ] Data storage 
+[ ] Feature Engineering 
+[ ] Similarity Scoring 
+[ ] Recommender System 
+[ ] Front End/Serving 
 
 # Setup
 
