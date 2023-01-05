@@ -42,7 +42,7 @@ We use Python version >= 3.8
 [ROOT]
 │
 └───data 
-│   |   lichess_2019_06.pgn (__must upload yourself__)
+│   |   lichess_2019_06.pgn (**must upload yourself**)
 │   |   lichess_2015_06.pgn (_must upload yourself_)
 │   |   lichess_2013_06.pgn (_must upload yourself_)
 │   |   processed_2019_06.json (_generated after running process_data.py_)
