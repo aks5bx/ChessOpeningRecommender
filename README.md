@@ -1,7 +1,9 @@
 # Recommending Chess Openings based on Playing Style 
 
 Authors: Adi Srikanth and Will Gorick 
+
 Time: Winter 2023
+
 Tags: Chess, Recommender Systems
 
 # Overview 
