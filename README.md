@@ -42,11 +42,11 @@ We use Python version >= 3.8
 [ROOT]
 │
 └───data 
-│   |   lichess_2019_06.pgn (**must upload yourself**)
-│   |   lichess_2015_06.pgn (_must upload yourself_)
-│   |   lichess_2013_06.pgn (_must upload yourself_)
-│   |   processed_2019_06.json (_generated after running process_data.py_)
-│   |   processed_2019_06_df.csv (_generated after running open_data.py_)
+│   |   lichess_2019_06.pgn (must upload yourself)
+│   |   lichess_2015_06.pgn (must upload yourself)
+│   |   lichess_2013_06.pgn (must upload yourself)
+│   |   processed_2019_06.json (generated after running process_data.py_)
+│   |   processed_2019_06_df.csv (generated after running open_data.py_)
 │
 └───src
 │   |   open_data.py
