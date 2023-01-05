@@ -1,7 +1,7 @@
 import pandas as pd 
 import json 
 
-def dict_to_pandas(filename):
+def dict_to_pandas(filename, writefile = None):
     '''
     Takes a dictionary of games and returns a pandas dataframe
     '''
@@ -12,9 +12,14 @@ def dict_to_pandas(filename):
         df = pd.DataFrame.from_dict(game_dict, orient='index')
         print('Converted to Pandas DataFrame')
     
+    if writefile != None:
+        writefile = 'data/processed_' + writefile + '_df.csv'
+        df.to_csv(writefile)
+        print('Wrote to CSV')
+
     return df
 
-def explore_df(df):
+def explore_df(df, write = False):
     print('')
     print('Dataframe Head')
     print(df.head())
@@ -34,13 +39,13 @@ def explore_df(df):
     print('Number of Users with 5+ Games')
     print(len(df_grouped[df_grouped['num_games'] >= 5]))
 
+
 def main():
     with open('config.json') as cfg_file:
         cfg = json.load(cfg_file)
+        filename = cfg['live_run']['processsed_file'] 
 
-    filename = cfg['live_run']['processsed_file'] 
-    games_df = dict_to_pandas(filename)
-
+    games_df = dict_to_pandas(filename, write = cfg['live_run']['dataset'])
     explore_df(games_df)
 
 if __name__ == '__main__':
