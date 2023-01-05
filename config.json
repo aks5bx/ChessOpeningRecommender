@@ -1,7 +1,8 @@
 {
     "live_run":{
         "dataset": "2019_06", 
-        "dataset_file" : "data/lichess_2019_06.pgn"
+        "dataset_file" : "data/lichess_2019_06.pgn", 
+        "processsed_file" : "data/processed_2019_06.json"
     }, 
 
     "2019_06":{
