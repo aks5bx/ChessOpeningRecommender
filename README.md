@@ -1,6 +1,6 @@
 # Recommending Chess Openings based on Playing Style 
 
-Authors: Adi Srikanth and Will Gorick 
+Authors: [Adi Srikanth](https://lichess.org/@/asrikanth) and Will Gorick 
 
 Time: Winter 2023
 
