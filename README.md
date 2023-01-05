@@ -45,8 +45,8 @@ We use Python version >= 3.8
 │   |   lichess_2019_06.pgn (must upload yourself)
 │   |   lichess_2015_06.pgn (must upload yourself)
 │   |   lichess_2013_06.pgn (must upload yourself)
-│   |   processed_2019_06.json (generated after running process_data.py_)
-│   |   processed_2019_06_df.csv (generated after running open_data.py_)
+│   |   processed_2019_06.json (generated after running process_data.py)
+│   |   processed_2019_06_df.csv (generated after running open_data.py)
 │
 └───src
 │   |   open_data.py
