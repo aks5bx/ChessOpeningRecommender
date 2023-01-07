@@ -51,7 +51,10 @@ We use Python version >= 3.8
 └───src
 │   |   open_data.py
 │   |   process_data.py
+│   |   chess_utils.py
 │
+└───notebooks
+│   |   scratch.ipynb
 │
 └───gitignore
 │
@@ -76,3 +79,9 @@ Next, we run our data through the `process_data.py` script. This handles the fol
 ## Further Processing and Wrangling 
 
 We additionally include the script `open_data.py`, which can "open up" our data and store it in the form of a pandas dataframe. This is useful for doing basic exploratory data analysis on our dataset. Additionally, we are able to easily confirm the number of unique players we have in our dataset. 
+
+## Utils
+
+The file `chess_utils.py` contains utility functions for future use. Notably, it contains: 
+
+`unpack_moves()`: this function takes in a string of PGN moves and returns a list of tuples, where each tuple is formatted as `(move, evaluation at move)`. (Note that the move is a singular move and not a move by white and move by black)
