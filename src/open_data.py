@@ -45,7 +45,7 @@ def main():
         cfg = json.load(cfg_file)
         filename = cfg['live_run']['processsed_file'] 
 
-    games_df = dict_to_pandas(filename, writefile = cfg['live_run']['dataset'])
+    games_df = dict_to_pandas(filename) # , writefile = cfg['live_run']['dataset']
     explore_df(games_df)
 
 if __name__ == '__main__':
