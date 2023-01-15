@@ -26,6 +26,16 @@ def attribute_moves_df(pgn_df, unpack = False):
 
     return pgn_df
 
+def prepare_final_df(games_df):
+    games_df['move5'], games_df['move10'], games_df['move15'], games_df['final'] = zip(*games_df['game_attributes'])
+    games_df['move5_K'], games_df['move5_Q'], games_df['move5_R'], games_df['move5_B'], games_df['move5_N'], games_df['move5_P'], games_df['move5_captures'], games_df['move5_checks'], games_df['move5_pawn_density'] = zip(*games_df['move5'])
+    games_df['move10_K'], games_df['move10_Q'], games_df['move10_R'], games_df['move10_B'], games_df['move10_N'], games_df['move10_P'], games_df['move10_captures'], games_df['move10_checks'], games_df['move10_pawn_density'] = zip(*games_df['move10'])
+    games_df['move15_K'], games_df['move15_Q'], games_df['move15_R'], games_df['move15_B'], games_df['move15_N'], games_df['move15_P'], games_df['move15_captures'], games_df['move15_checks'], games_df['move15_pawn_density'] = zip(*games_df['move15'])
+
+    prepped_df = games_df[['user_name', 'user_elo', 'opening_code', 'opening_name', 'move5_K', 'move5_Q', 'move5_R', 'move5_B', 'move5_N', 'move5_P', 'move5_captures', 'move5_checks', 'move5_pawn_density', 'move10_K', 'move10_Q', 'move10_R', 'move10_B', 'move10_N', 'move10_P', 'move10_captures', 'move10_checks', 'move10_pawn_density', 'move15_K', 'move15_Q', 'move15_R', 'move15_B', 'move15_N', 'move15_P', 'move15_captures', 'move15_checks', 'move15_pawn_density']]
+    
+    return prepped_df
+
 def get_square(move_str):
     for i, c in enumerate(move_str):
         if c.isdigit():
