@@ -80,15 +80,23 @@ def get_move_attributes_game(move_lst):
     attributes_15 = [0,0,0,0,0,0,0,0,0]
     attributes_final = []
 
-    if len(move_lst) < 10:
-        last_3_evals = [move_lst[-3][1],move_lst[-2][1],move_lst[-1][1]]
+    if len(move_lst) < 19 and len(move_lst) % 2 == 0:
+        last_3_evals = [move_lst[-6][1],move_lst[-4][1],move_lst[-2][1]]
+    elif len(move_lst) < 19 and len(move_lst) % 2 != 0:
+        last_3_evals = [move_lst[-5][1],move_lst[-3][1],move_lst[-1][1]]
     else:
-        last_3_evals = [move_lst[7][1],move_lst[8][1],move_lst[9][1]]
+        last_3_evals = [move_lst[14][1],move_lst[16][1],move_lst[18][1]]
 
     last_3_evals = [x for x in last_3_evals if x is not None]
-    opening_eval = sum(last_3_evals) / len(last_3_evals)
+    opening_eval = round(sum(last_3_evals) / len(last_3_evals), 2)
     
     for move_num, move in enumerate(move_lst):
+
+        if move_num % 2 != 0:
+            continue
+        else:
+            move_num = (move_num / 2) + 1
+
         piece, capture, check, pawn_density = get_move_attributes(move)
 
         if piece == '!':
@@ -99,13 +107,13 @@ def get_move_attributes_game(move_lst):
         checks += check
         pawn_density += pawn_density
 
-        if move_num == 4:
+        if move_num == 5:
             attributes_5 = [piece_movements[piece] for piece in piece_movements.keys()]
             attributes_5 += [captures, checks, pawn_density]
-        if move_num == 9:
+        if move_num == 10:
             attributes_10 = [piece_movements[piece] for piece in piece_movements.keys()]
             attributes_10 += [captures, checks, pawn_density]
-        if move_num == 14:
+        if move_num == 15:
             attributes_15 = [piece_movements[piece] for piece in piece_movements.keys()]
             attributes_15 += [captures, checks, pawn_density]
 
