@@ -27,14 +27,14 @@ def attribute_moves_df(pgn_df, unpack = False):
     return pgn_df
 
 def prepare_final_df(games_df):
-    games_df['move5'], games_df['move10'], games_df['move15'], games_df['final'] = zip(*games_df['game_attributes'])
+    games_df['move5'], games_df['move10'], games_df['move15'], games_df['final'], games_df['opening_eval'] = zip(*games_df['game_attributes'])
     games_df['move5_K'], games_df['move5_Q'], games_df['move5_R'], games_df['move5_B'], games_df['move5_N'], games_df['move5_P'], games_df['move5_captures'], games_df['move5_checks'], games_df['move5_pawn_density'] = zip(*games_df['move5'])
     games_df['move10_K'], games_df['move10_Q'], games_df['move10_R'], games_df['move10_B'], games_df['move10_N'], games_df['move10_P'], games_df['move10_captures'], games_df['move10_checks'], games_df['move10_pawn_density'] = zip(*games_df['move10'])
     games_df['move15_K'], games_df['move15_Q'], games_df['move15_R'], games_df['move15_B'], games_df['move15_N'], games_df['move15_P'], games_df['move15_captures'], games_df['move15_checks'], games_df['move15_pawn_density'] = zip(*games_df['move15'])
 
-    prepped_df = games_df[['user_name', 'user_elo', 'opening_code', 'opening_name', 'move5_K', 'move5_Q', 'move5_R', 'move5_B', 'move5_N', 'move5_P', 'move5_captures', 'move5_checks', 'move5_pawn_density', 'move10_K', 'move10_Q', 'move10_R', 'move10_B', 'move10_N', 'move10_P', 'move10_captures', 'move10_checks', 'move10_pawn_density', 'move15_K', 'move15_Q', 'move15_R', 'move15_B', 'move15_N', 'move15_P', 'move15_captures', 'move15_checks', 'move15_pawn_density']]
+    feature_df = games_df[['user_name', 'user_elo', 'opening_code', 'opening_name', 'opening_category', 'opening_eval', 'move5_K', 'move5_Q', 'move5_R', 'move5_B', 'move5_N', 'move5_P', 'move5_captures', 'move5_checks', 'move5_pawn_density', 'move10_K', 'move10_Q', 'move10_R', 'move10_B', 'move10_N', 'move10_P', 'move10_captures', 'move10_checks', 'move10_pawn_density', 'move15_K', 'move15_Q', 'move15_R', 'move15_B', 'move15_N', 'move15_P', 'move15_captures', 'move15_checks', 'move15_pawn_density']]
     
-    return prepped_df
+    return feature_df
 
 def get_square(move_str):
     for i, c in enumerate(move_str):
@@ -75,11 +75,19 @@ def get_move_attributes_game(move_lst):
     checks = 0
     pawn_density = 0
 
-    attributes_5 = []
-    attributes_10 = []
-    attributes_15 = []
+    attributes_5 = [0,0,0,0,0,0,0,0,0]
+    attributes_10 = [0,0,0,0,0,0,0,0,0]
+    attributes_15 = [0,0,0,0,0,0,0,0,0]
     attributes_final = []
 
+    if len(move_lst) < 10:
+        last_3_evals = [move_lst[-3][1],move_lst[-2][1],move_lst[-1][1]]
+    else:
+        last_3_evals = [move_lst[7][1],move_lst[8][1],move_lst[9][1]]
+
+    last_3_evals = [x for x in last_3_evals if x is not None]
+    opening_eval = sum(last_3_evals) / len(last_3_evals)
+    
     for move_num, move in enumerate(move_lst):
         piece, capture, check, pawn_density = get_move_attributes(move)
 
@@ -104,4 +112,9 @@ def get_move_attributes_game(move_lst):
     attributes_final = [piece_movements[piece] for piece in piece_movements.keys()]
     attributes_final += [captures, checks, pawn_density]
 
-    return attributes_5, attributes_10, attributes_15, attributes_final
+    try:
+        return attributes_5, attributes_10, attributes_15, attributes_final, opening_eval
+    except:
+        print(last_3_evals)
+        print(move_lst)
+        return attributes_5, attributes_10, attributes_15, attributes_final, opening_eval
