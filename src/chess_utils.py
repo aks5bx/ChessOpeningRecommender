@@ -31,9 +31,18 @@ def prepare_final_df(games_df):
     games_df['move5_K'], games_df['move5_Q'], games_df['move5_R'], games_df['move5_B'], games_df['move5_N'], games_df['move5_P'], games_df['move5_captures'], games_df['move5_checks'], games_df['move5_pawn_density'] = zip(*games_df['move5'])
     games_df['move10_K'], games_df['move10_Q'], games_df['move10_R'], games_df['move10_B'], games_df['move10_N'], games_df['move10_P'], games_df['move10_captures'], games_df['move10_checks'], games_df['move10_pawn_density'] = zip(*games_df['move10'])
     games_df['move15_K'], games_df['move15_Q'], games_df['move15_R'], games_df['move15_B'], games_df['move15_N'], games_df['move15_P'], games_df['move15_captures'], games_df['move15_checks'], games_df['move15_pawn_density'] = zip(*games_df['move15'])
+    games_df['final_K'], games_df['final_Q'], games_df['final_R'], games_df['final_B'], games_df['final_N'], games_df['final_P'], games_df['final_captures'], games_df['final_checks'], games_df['final_pawn_density'] = zip(*games_df['final'])
 
-    feature_df = games_df[['user_name', 'user_elo', 'opening_code', 'opening_name', 'opening_category', 'opening_eval', 'move5_K', 'move5_Q', 'move5_R', 'move5_B', 'move5_N', 'move5_P', 'move5_captures', 'move5_checks', 'move5_pawn_density', 'move10_K', 'move10_Q', 'move10_R', 'move10_B', 'move10_N', 'move10_P', 'move10_captures', 'move10_checks', 'move10_pawn_density', 'move15_K', 'move15_Q', 'move15_R', 'move15_B', 'move15_N', 'move15_P', 'move15_captures', 'move15_checks', 'move15_pawn_density']]
-    
+    feature_df = games_df[['user_name', 'user_elo', 
+                        'opening_code', 'opening_name', 'opening_category', 'opening_eval', 
+                        'move5_K', 'move5_Q', 'move5_R', 'move5_B', 'move5_N', 'move5_P', 
+                        'move5_captures', 'move5_checks', 'move5_pawn_density', 
+                        'move10_K', 'move10_Q', 'move10_R', 'move10_B', 'move10_N', 'move10_P', 
+                        'move10_captures', 'move10_checks', 'move10_pawn_density', 
+                        'move15_K', 'move15_Q', 'move15_R', 'move15_B', 'move15_N', 'move15_P', 
+                        'move15_captures', 'move15_checks', 'move15_pawn_density', 
+                        'final_K', 'final_Q', 'final_R', 'final_B', 'final_N', 'final_P',
+                        'final_captures', 'final_checks', 'final_pawn_density']]
     return feature_df
 
 def get_square(move_str):
@@ -108,17 +117,31 @@ def get_move_attributes_game(move_lst):
         pawn_density += pawn_density
 
         if move_num == 5:
-            attributes_5 = [piece_movements[piece] for piece in piece_movements.keys()]
-            attributes_5 += [captures, checks, pawn_density]
+            attributes_5 = [piece_movements[piece] / 5 for piece in piece_movements.keys()]
+            attributes_5 += [captures / 5, checks / 5, pawn_density / 5]
+            piece_movements = {'K': 0, 'Q': 0, 'R': 0, 'B': 0, 'N': 0, 'P': 0}
+            captures = 0
+            checks = 0
+            pawn_density = 0
         if move_num == 10:
-            attributes_10 = [piece_movements[piece] for piece in piece_movements.keys()]
-            attributes_10 += [captures, checks, pawn_density]
+            attributes_10 = [piece_movements[piece] / 10 for piece in piece_movements.keys()]
+            attributes_10 += [captures / 10, checks / 10, pawn_density / 10]
+            piece_movements = {'K': 0, 'Q': 0, 'R': 0, 'B': 0, 'N': 0, 'P': 0}
+            captures = 0
+            checks = 0
+            pawn_density = 0
         if move_num == 15:
-            attributes_15 = [piece_movements[piece] for piece in piece_movements.keys()]
-            attributes_15 += [captures, checks, pawn_density]
+            attributes_15 = [piece_movements[piece] / 15 for piece in piece_movements.keys()]
+            attributes_15 += [captures / 15, checks / 15, pawn_density / 15]
+            piece_movements = {'K': 0, 'Q': 0, 'R': 0, 'B': 0, 'N': 0, 'P': 0}
+            captures = 0
+            checks = 0
+            pawn_density = 0
 
-    attributes_final = [piece_movements[piece] for piece in piece_movements.keys()]
-    attributes_final += [captures, checks, pawn_density]
+    moves = int(len(move_lst) / 2)
+    attributes_final = [piece_movements[piece] / moves for piece in piece_movements.keys()]
+    attributes_final += [captures / moves, checks / moves, pawn_density / moves]
+    attributes_final = [round(x, 2) for x in attributes_final]
 
     try:
         return attributes_5, attributes_10, attributes_15, attributes_final, opening_eval
@@ -126,3 +149,4 @@ def get_move_attributes_game(move_lst):
         print(last_3_evals)
         print(move_lst)
         return attributes_5, attributes_10, attributes_15, attributes_final, opening_eval
+
