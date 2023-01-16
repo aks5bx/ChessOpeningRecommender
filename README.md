@@ -1,3 +1,3 @@
-# Recommending Chess Openings based on Playing Style 
+# This branch is not up to date
 
-Authors: Adi Srikanth and Will Gorick 
+Please go to the `develop` branch for the most up-to-date code
