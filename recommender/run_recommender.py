@@ -105,8 +105,8 @@ def main(args):
         cl = True
 
     # Load data
-    feature_df = pd.read_csv('data/feature_df.csv')
-    label_df = pd.read_csv('data/label_df.csv')
+    feature_df = pd.read_csv('data/full_feature_df.csv')
+    label_df = pd.read_csv('data/full_label_df.csv')
     id_to_username_dict = dictionary = dict(zip(feature_df.user_id, feature_df.user_name))
     username_to_id_dict = dict(zip(feature_df.user_name, feature_df.user_id))
     print('——' * 25)
