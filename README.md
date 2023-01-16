@@ -1,6 +1,6 @@
-# Recommending Chess Openings based on Playing Style 
+# Recommending Chess Openings based on Play Style 
 
-_Project still in progress_ 
+## _Project still in progress_ 
 
 Authors: [Adi Srikanth](https://lichess.org/@/asrikanth) and Will Gorick 
 
@@ -22,9 +22,12 @@ This general goal of this project is to, for any active lichess user:
 
 ## Tasks 
 
-Current Status: we have a version 1 recommender system working powered by around 200K games from lichess. (Note: we pulled almost 70M games, but a very small fraction contains engine evaluation data, which we use in our recommendations). Our recommender system has a solid base of features and can reliably recommend openings to a user with game data. 
+### Current Status
 
-Version 1 Checklist:  
+We have a version 1 recommender system working powered by around 200K games from lichess. (Note: we pulled almost 70M games, but a very small fraction contains engine evaluation data, which we use in our recommendations). Our recommender system has a solid base of features and can reliably recommend openings to a user with game data. 
+
+### Version 1 Checklist
+
 - [X] Develop overal goal/plan
 - [X] Formalize data pipeline 
 - [ ] Data storage 
@@ -73,7 +76,7 @@ See the repository structure below for details on where to store the files.
 └───notebooks
 │   |   scratch.ipynb
 │
-└───src
+└───recommender
 │   |   recommender_model.py
 │   |   run_recommender.py
 │
@@ -202,6 +205,6 @@ Recommendations for  Igracsaha
 ——————————————————————————————————————————————————
 ```
 
-The results here are interesting. A brief OpeningTree analysis of Igracsaha's games shows that they clearly prefer e4, playing over 95% of their openings with this beginning. However, some variants of d4 openings (the #1 recommendation) score well for this user (specifically 1. Nf3 scores better than 1. e4). 
+The results here are interesting. A brief OpeningTree analysis of Igracsaha's games shows that they clearly prefer _1. e4_, playing over 95% of their openings with this beginning. However, some variants of d4 openings (the #1 recommendation) score well for this user (specifically _1. Nf3_ scores better than _1. e4_). 
 
 Interestingly enough, the #2 recommendation is the Italian Game. This is in fact the most common opening played by Igracsaha and scores around 53% for this user. 
