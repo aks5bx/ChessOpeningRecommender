@@ -44,8 +44,8 @@ def explore_df(df, write = False):
 def finalize_dataframes(pre_final_df, write = True ):
     attributed_df = cu.attribute_moves_df(pre_final_df, unpack = True)
 
-    feature_df = cu.create_features_df(attributed_df)
-    label_df = cu.create_labels_df(feature_df)
+    feature_df = cu.prepare_final_df(attributed_df)
+    label_df = cu.create_label_df(feature_df)
 
     if write:
         feature_df.to_csv('data/new_features_df.csv')
@@ -59,7 +59,9 @@ def main():
         cfg = json.load(cfg_file)
         filename = cfg['live_run']['processsed_file'] 
 
-    games_df = dict_to_pandas(filename, writefile = cfg['live_run']['dataset']) # 
+    games_df = dict_to_pandas(filename, writefile = cfg['live_run']['dataset'])
+    finalize_dataframes(games_df, write = True )
+
     explore_df(games_df)
 
 if __name__ == '__main__':

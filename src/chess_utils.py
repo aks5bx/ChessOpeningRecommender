@@ -1,4 +1,4 @@
-from src import process_data as pdata
+import process_data as pdata
 import pandas as pd
 
 ###################
@@ -12,10 +12,18 @@ def unpack_moves(pgn_str):
     '''
     moves = pgn_str.split('. ')[1:]
     unpacked_moves = []
+    prev_eval = 0
     for move_str in moves:
         move = pdata.get_substring('', ' {', move_str)
-        eval = float(pdata.get_substring('eval ', '] ', move_str))
-        unpacked_moves.append((move, eval))
+        try:
+            eval = float(pdata.get_substring('eval ', '] ', move_str))
+            prev_eval = eval 
+            unpacked_moves.append((move, eval))
+        except:
+            if '#' in move_str:
+                eval = prev_eval
+            else:
+                continue 
 
     return unpacked_moves
 
@@ -54,6 +62,10 @@ def get_move_attributes(move_tuple):
 
 
 def get_move_attributes_game(move_lst):
+
+    if move_lst == None:
+        return None 
+
     piece_movements = {'K': 0, 'Q': 0, 'R': 0, 'B': 0, 'N': 0, 'P': 0}
     captures = 0
     checks = 0
@@ -64,7 +76,9 @@ def get_move_attributes_game(move_lst):
     attributes_15 = [0,0,0,0,0,0,0,0,0]
     attributes_final = []
 
-    if len(move_lst) < 19 and len(move_lst) % 2 == 0:
+    if len(move_lst) < 7:
+        last_3_evals = [0, 0, 0]
+    elif len(move_lst) < 19 and len(move_lst) % 2 == 0:
         last_3_evals = [move_lst[-6][1],move_lst[-4][1],move_lst[-2][1]]
     elif len(move_lst) < 19 and len(move_lst) % 2 != 0:
         last_3_evals = [move_lst[-5][1],move_lst[-3][1],move_lst[-1][1]]
@@ -147,6 +161,7 @@ def prepare_final_df(games_df):
     games_df['move10_K'], games_df['move10_Q'], games_df['move10_R'], games_df['move10_B'], games_df['move10_N'], games_df['move10_P'], games_df['move10_captures'], games_df['move10_checks'], games_df['move10_pawn_density'] = zip(*games_df['move10'])
     games_df['move15_K'], games_df['move15_Q'], games_df['move15_R'], games_df['move15_B'], games_df['move15_N'], games_df['move15_P'], games_df['move15_captures'], games_df['move15_checks'], games_df['move15_pawn_density'] = zip(*games_df['move15'])
     games_df['final_K'], games_df['final_Q'], games_df['final_R'], games_df['final_B'], games_df['final_N'], games_df['final_P'], games_df['final_captures'], games_df['final_checks'], games_df['final_pawn_density'] = zip(*games_df['final'])
+    games_df['opening_category'] = games_df['opening_code'].apply(lambda x: x[0])
 
     feature_df = games_df[['user_name', 'user_elo', 
                         'opening_code', 'opening_name', 'opening_category', 'opening_eval', 
@@ -164,6 +179,8 @@ def create_label_df(feature_df):
     feature_df['opening_name_simple'] = feature_df['opening_name'].apply(lambda x: x.split(':')[0])
     feature_df['opening_simple_id'] = feature_df.groupby(['opening_name_simple']).ngroup()
     feature_df['user_id'] = feature_df.groupby(['user_name']).ngroup()
+    feature_df.index = feature_df.index.astype(int)
+
     feature_df['game_id'] = feature_df.index + 1
 
     first_column = feature_df.pop('game_id')
