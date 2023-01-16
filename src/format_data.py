@@ -1,6 +1,8 @@
 import pandas as pd 
 import json 
 
+import chess_utils as cu
+
 def dict_to_pandas(filename, writefile = None):
     '''
     Takes a dictionary of games and returns a pandas dataframe
@@ -39,13 +41,25 @@ def explore_df(df, write = False):
     print('Number of Users with 5+ Games')
     print(len(df_grouped[df_grouped['num_games'] >= 5]))
 
+def finalize_dataframes(pre_final_df, write = True ):
+    attributed_df = cu.attribute_moves_df(pre_final_df, unpack = True)
+
+    feature_df = cu.create_features_df(attributed_df)
+    label_df = cu.create_labels_df(feature_df)
+
+    if write:
+        feature_df.to_csv('data/new_features_df.csv')
+        label_df.to_csv('data/new_labels_df.csv')
+        print('Wrote to CSV')
+
+    return feature_df, label_df
 
 def main():
     with open('config.json') as cfg_file:
         cfg = json.load(cfg_file)
         filename = cfg['live_run']['processsed_file'] 
 
-    games_df = dict_to_pandas(filename) # , writefile = cfg['live_run']['dataset']
+    games_df = dict_to_pandas(filename, writefile = cfg['live_run']['dataset']) # 
     explore_df(games_df)
 
 if __name__ == '__main__':

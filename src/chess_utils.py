@@ -19,9 +19,6 @@ def unpack_moves(pgn_str):
 
     return unpacked_moves
 
-def unpack_moves_df(pgn_df):
-    pgn_df['unpacked_moves'] = pgn_df.apply(lambda row: unpack_moves(row['pgn']), axis = 1)
-    return pgn_df
 
 def get_square(move_str):
     for i, c in enumerate(move_str):
@@ -131,6 +128,10 @@ def get_move_attributes_game(move_lst):
 #####################
 ## Dataframe Utils ##
 #####################
+
+def unpack_moves_df(pgn_df):
+    pgn_df['unpacked_moves'] = pgn_df.apply(lambda row: unpack_moves(row['pgn']), axis = 1)
+    return pgn_df
 
 def attribute_moves_df(pgn_df, unpack = False):
     if unpack:
