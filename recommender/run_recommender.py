@@ -17,8 +17,8 @@ from recommender_model import ChessGamesDataset, MatrixFactorization, get_datalo
 ##########
 ## CUDA ##
 ##########
-if torch.cuda.is_available():
-  device = 'cuda'
+if torch.backends.mps.is_available():
+  device = 'mps'
 else:
   device = 'cpu'
 
@@ -76,7 +76,8 @@ def prep_df(feature_df, label_df, train_split = 0.8):
     return feature_input_df, (unique_users, unique_openings, num_input_features), (train_input_ts, train_output_ts, test_input_ts, test_output_ts)
 
 
-def train_test_pipeline(metadata_tuple, df_tuple, batch_size = 64, emb_size = 500, epochs = 10, lr = 0.001):
+def train_test(metadata_tuple, df_tuple, 
+                        batch_size = 64, emb_size = 500, epochs = 10, lr = 0.001, custom_loss = False):
 
     num_users, num_openings, num_input_features = metadata_tuple
     train_input_ts, train_output_ts, test_input_ts, test_output_ts = df_tuple
@@ -88,7 +89,7 @@ def train_test_pipeline(metadata_tuple, df_tuple, batch_size = 64, emb_size = 50
     test_dataloader = get_dataloader(test_games_dataset, batch_size = 1024)
 
     model = MatrixFactorization(num_users, num_input_features, num_openings, emb_size)
-    train_epochs(dataloader, test_dataloader, model, epochs=epochs, lr=0.001, wd=0.0)
+    train_epochs(dataloader, test_dataloader, model, epochs=epochs, lr=0.001, wd=0.0, custom_loss = custom_loss)
 
     return model 
 
@@ -97,7 +98,11 @@ def main(args):
     epochs = args.epochs
     batch_size = args.batch_size
     write = args.write
-    learning_rate = args.lr
+    learning_rate = args.alpha
+    if args.loss == 'MSE':
+        cl = False
+    else:
+        cl = True
 
     # Load data
     feature_df = pd.read_csv('data/feature_df.csv')
@@ -115,15 +120,16 @@ def main(args):
     print('——' * 25)
 
     # Train model
-    trained_model = train_test_pipeline(metadata_tuple, df_tuple, 
-                                        batch_size = batch_size, epochs = epochs, lr = learning_rate)
+    trained_model = train_test(metadata_tuple, df_tuple, 
+                               batch_size = batch_size, epochs = epochs, lr = learning_rate, custom_loss = cl)
     print('——' * 25)
     print('Trained Model')
     print('——' * 25)
 
     # Save model
     if write == 'Y':
-        torch.save(trained_model.state_dict(), 'model.pth')
+        model_name = 'model_' + str(epochs) + '_' + str(batch_size) + '_' + str(learning_rate) + '.pth'
+        torch.save(trained_model.state_dict(), model_name)
         print('——' * 25)
         print('Saved Model State')
         print('——' * 25)
@@ -144,8 +150,9 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--epochs", "-e", type=int, default=10)
     parser.add_argument("--batch_size", "-b", type=int, default=64)
-    parser.add_argument("--lr", "-l", type=float, default=0.001)
+    parser.add_argument("--alpha", "-a", type=float, default=0.001)
     parser.add_argument("--write", "-w", type=str, default='Y')
+    parser.add_argument("--loss", "-l", type=str, default='MSE')
 
     return parser.parse_args()
 

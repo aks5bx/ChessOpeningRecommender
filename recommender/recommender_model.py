@@ -33,13 +33,20 @@ class MatrixFactorization(torch.nn.Module):
         
         # initializing our matrices with a positive number generally will yield better results
         self.user_emb = torch.nn.Embedding(num_users, emb_size)
-        self.user_emb.weight.data.uniform_(0, 0.5)
+        self.user_emb.weight.data.uniform_(0.1, 0.75)
 
         # learn to represent the input features 
         self.l1 = torch.nn.Linear(num_input_features, emb_size, dtype=torch.float32)
 
+        # activation 
+        self.act1 = torch.nn.ReLU()
+        self.act2 = torch.nn.ReLU()
+        self.act3 = torch.nn.ReLU()
+
         # produce predictions for the best opening evals (for all openings)
-        self.l2 = torch.nn.Linear(emb_size, unique_openings)
+        self.l2 = torch.nn.Linear(emb_size, emb_size * 2)
+        self.l3 = torch.nn.Linear(emb_size * 2, unique_openings * 2)
+        self.l4 = torch.nn.Linear(unique_openings * 2, unique_openings)
 
 
     def forward(self, u, v):
@@ -47,12 +54,21 @@ class MatrixFactorization(torch.nn.Module):
         # layer 1
         u_out = self.user_emb(u)
         v_out = self.l1(v.to(torch.float32))
+        v_out = self.act1(v_out)
         out1 = torch.mul(u_out, v_out)
 
         # layer 2 
         out2 = self.l2(out1)
+        out2 = self.act2(out2)
 
-        return out2 
+        # layer 3 
+        out3 = self.l3(out2)
+        out3 = self.act3(out3)
+
+        # layer 4 
+        out4 = self.l4(out3)
+
+        return out4 
 
 #############
 ## Methods ##
@@ -61,14 +77,14 @@ class MatrixFactorization(torch.nn.Module):
 def get_dataloader(dataset, batch_size = 32):
   return torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
-def train_epochs(dataloader, test_dataloader, model, epochs=10, lr=0.01, wd=0.0, device='cpu'):
+def train_epochs(dataloader, test_dataloader, model, epochs=10, lr=0.01, wd=0.0, device='cpu', custom_loss=False):
     
     # Setting up optimizer and loss
-    optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=wd)
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     model.train()
     model.to(device)
     criterion = torch.nn.MSELoss()
-    
+
     for i in tqdm(range(epochs)):
       epoch_loss = 0
       for input_ts, output_ts in tqdm(dataloader):
@@ -94,11 +110,11 @@ def train_epochs(dataloader, test_dataloader, model, epochs=10, lr=0.01, wd=0.0,
       print('')
       print('Average Epoch Loss : ', epoch_loss / len(dataloader))
       
-      test_loss = test(model, dataloader)
+      test_loss = test(model, dataloader, custom_loss = custom_loss)
       print('Test Loss After Epoch ', i + 1, ':', test_loss)
       print('')
 
-def test(model, dataloader, device='cpu'):
+def test(model, dataloader, custom_loss = False, device='cpu'):
     model.eval()
     criterion = torch.nn.MSELoss()
 
