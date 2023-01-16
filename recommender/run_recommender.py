@@ -76,7 +76,7 @@ def prep_df(feature_df, label_df, train_split = 0.8):
     return feature_input_df, (unique_users, unique_openings, num_input_features), (train_input_ts, train_output_ts, test_input_ts, test_output_ts)
 
 
-def train_test_pipeline(metadata_tuple, df_tuple, batch_size = 64, emb_size = 500, epochs = 10):
+def train_test_pipeline(metadata_tuple, df_tuple, batch_size = 64, emb_size = 500, epochs = 10, lr = 0.001):
 
     num_users, num_openings, num_input_features = metadata_tuple
     train_input_ts, train_output_ts, test_input_ts, test_output_ts = df_tuple
@@ -97,6 +97,7 @@ def main(args):
     epochs = args.epochs
     batch_size = args.batch_size
     write = args.write
+    learning_rate = args.lr
 
     # Load data
     feature_df = pd.read_csv('data/feature_df.csv')
@@ -114,7 +115,8 @@ def main(args):
     print('——' * 25)
 
     # Train model
-    trained_model = train_test_pipeline(metadata_tuple, df_tuple, batch_size = batch_size, epochs = epochs)
+    trained_model = train_test_pipeline(metadata_tuple, df_tuple, 
+                                        batch_size = batch_size, epochs = epochs, lr = learning_rate)
     print('——' * 25)
     print('Trained Model')
     print('——' * 25)
@@ -142,6 +144,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--epochs", "-e", type=int, default=10)
     parser.add_argument("--batch_size", "-b", type=int, default=64)
+    parser.add_argument("--lr", "-l", type=float, default=0.001)
     parser.add_argument("--write", "-w", type=str, default='Y')
 
     return parser.parse_args()
