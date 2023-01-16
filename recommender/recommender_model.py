@@ -137,6 +137,23 @@ def model_predict(trained_model, ts, device='cpu'):
 def top_openings(model_output, n, opening_dict):
   top_n = torch.topk(model_output.flatten(), n).indices.tolist()
   top_n_names = [opening_dict[x] for x in top_n]
+
+  redo = 0
+  for name in top_n_names:
+    if 'efence' in name or 'efense' in name:
+        redo += 1
+
+  if redo > 0:
+    top_100 = torch.topk(model_output.flatten(), 100).indices.tolist()
+    top_100_names = [opening_dict[x] for x in top_100]
+    
+    top_n_names = []
+    for name in top_100_names:
+        if 'efence' not in name and 'efense' not in name:
+            top_n_names.append(name)
+            if len(top_n_names) == n:
+                break
+
   return top_n_names 
 
 def predict_user(feature_df, label_df, id, trained_model, id_to_username_dict = None, n = 3, device = 'cpu'):
