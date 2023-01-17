@@ -91,7 +91,7 @@ See the repository structure below for details on where to store the files.
 
 # Data Pipeline 
 
-### <ins>Diagram</ins>
+## Diagram
 
 Describes process of generating data for the recommender system. Begins with the raw data (from the Lichess database) at the top and ends with the feature dataframe (x data) and the label dataframe (y data) at the bottom. _Click Image to Enlarge_
 
