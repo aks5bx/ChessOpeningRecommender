@@ -91,6 +91,21 @@ See the repository structure below for details on where to store the files.
 
 # Data Pipeline 
 
+## Diagram 
+
+```
+flowchart TD
+    id1[(Raw Data via Lichess (filename.pgn.zst))] --> id2((Uncompress))
+    id2((Uncompress)) --> id3(filename.pgn)
+    id3(filename.pgn) --> id4((Update Config, Run process_data.py))
+    id4((Update Config, Run process_data.py)) --> id5(processed.json)
+    id5(processed.json) --> id6((Run format_data.py))
+    id6((Run format_data.py)) --> id7(processed_df.csv)
+    id7(processed_df.csv) --> id8((Run postprocess_data.ipynb))
+    id8((Run postprocess_data.ipynb)) --> id9([feature_df.csv])
+    id8((Run postprocess_data.ipynb)) --> id10([label_df.csv])
+```
+
 ## Step 1: Ingesting Raw Data 
 
 We source our data from the lichess open [database](https://database.lichess.org/). Specifically, we download our data in the `.pgn.zst` format and extract it as one `.pgn` file. 
