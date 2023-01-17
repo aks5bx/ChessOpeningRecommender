@@ -157,6 +157,11 @@ The embeddings are standard Pytorch embeddings. Specifically, they take a single
 
 The feed-forward network uses three linear layers and ReLU activation functions. The first linear layer takes the user attribute data and runs it through a layer. The next two layers are used to expand dimensionality and ultimately produce an output vector that is of size p, where p is the number of unique openings we are considering. Ultimately, the goal is for the output vector to predict the opening evaluation a user would end up with if they played a certain opening. 
 
+### Loss Function 
+
+The recommender system is trained using Mean Squared Error Loss as implemented by PyTorch using `torch.nn.MSELoss()`. We also note that no form of binary loss can be used because we are interested in predicting the continuous value for opening evaluation.  
+
+
 ## Features 
 
 We use the following features in order to describe a user's playing style: 
