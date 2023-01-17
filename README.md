@@ -91,6 +91,16 @@ See the repository structure below for details on where to store the files.
 
 # Data Pipeline 
 
+## Diagram
+
+Describes process of generating data for the recommender system. Begins with the raw data (from the Lichess database) at the top and ends with the feature dataframe (x data) and the label dataframe (y data) at the bottom. 
+
+_Click Image to Enlarge_
+
+<p align="center">
+<img src="https://mermaid.ink/img/pako:eNqVlMtygjAUhl8lk27sDDLiXTrTTV22m15WwDiRHCAtJEwIWuv47g1Gq9CLhVXI_53vJAPJFoeCAnZxlIp1mBCp0PPc50g_jDqeF7EUOMnAzmNufxQKrRhB9yxMoCiCAHW7t5rrd7wXHoosl9XsNbo5CpqBwQc1a3DCm4HBh1qSU6IA3QkesdhCjyVHuRShli50QOx8c971vwVGP-ocEqD2ayH4mWjk1aPjisYdrzJGQmZE_bSC3wBTPjl1XNDIDovVWenEa4bHrlMjzUWhanth-YYvz7tfAo1upj8uEFVKOPYJ2iqcnuelZAlpzWAchdqkUDF6JMUbuFeT8cxClnnrrhlViTvM3-v0rBXt9C7i9YL-Fx8Rp8n3m_rBX_Zv9LCVe9TKPW7lnrRyTy-6fY4tnIH-lxnVN8W2qvexSiADH7t6SCEiZap8bCGTJcDiRFXhqKendgcHKZV42vAQu0qWYOFyf0rnjMSSZNiNSFroWaBMCflgrqVwf4Lx7hO3zovP?type=png" height="500">
+</p>
+
 ## Step 1: Ingesting Raw Data 
 
 We source our data from the lichess open [database](https://database.lichess.org/). Specifically, we download our data in the `.pgn.zst` format and extract it as one `.pgn` file. 
