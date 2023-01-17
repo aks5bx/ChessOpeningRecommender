@@ -127,11 +127,13 @@ We additionally include the script `open_data.py`, which can "open up" our data 
 
 To run this step, run `python src/format_data.py`. If you have strayed from the file naming conventions, you may have to adjust the script slightly. 
 
-## Step 3: Assorted Feature Extraction 
+## Step 3: Postprocessing
 
-The ipynotebook `notebooks/scratch.ipynb` contains different cells that help finish up the data pipeline stage. These steps need to be ported over to Python, but this has been deprioritized for the time being. 
+The ipynotebook `notebooks/postprocess_data.ipynb` contains  cells that help finish up the data pipeline stage. These steps need to be ported over to Python, but this has been deprioritized for the time being. 
 
-The cells of importance are the cells that generated the Y Data (Label Data) and the cells that append data (this is helpful to add more data to our current store). 
+Running the Initial Dataset section of the notebook will complete the data pipeline process for a fresh data load.
+
+Running the Append Data section of the notebook will combine two independently loaded datasets into one dataset. This is helpful if you choose to load one month of data at a time. In this case, you can load Month A and save a first file, load month B and save a second file, and then run the Append Data section to combined the two files into one cohesive output. 
 
 ## Utils
 
