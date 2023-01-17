@@ -91,7 +91,7 @@ See the repository structure below for details on where to store the files.
 
 # Data Pipeline 
 
-## Diagram 
+<ins>Diagram</ins>
 
 _Click to Enlarge_
 
