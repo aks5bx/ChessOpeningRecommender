@@ -93,7 +93,7 @@ See the repository structure below for details on where to store the files.
 
 ## Diagram 
 
-```
+```mermaid
 flowchart TD
     id1[(Raw Data via Lichess (filename.pgn.zst))] --> id2((Uncompress))
     id2((Uncompress)) --> id3(filename.pgn)
