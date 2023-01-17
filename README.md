@@ -93,8 +93,7 @@ See the repository structure below for details on where to store the files.
 
 ## Diagram 
 
-```mermaid
-graph TD;
+flowchart TD
     id1[(Raw Data via Lichess (filename.pgn.zst))] --> id2((Uncompress))
     id2((Uncompress)) --> id3(filename.pgn)
     id3(filename.pgn) --> id4((Update Config, Run process_data.py))
@@ -104,7 +103,7 @@ graph TD;
     id7(processed_df.csv) --> id8((Run postprocess_data.ipynb))
     id8((Run postprocess_data.ipynb)) --> id9([feature_df.csv])
     id8((Run postprocess_data.ipynb)) --> id10([label_df.csv])
-```
+
 
 ## Step 1: Ingesting Raw Data 
 
