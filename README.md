@@ -93,18 +93,7 @@ See the repository structure below for details on where to store the files.
 
 ## Diagram 
 
-```mermaid
-flowchart TD
-    id1[(Raw Data via Lichess (filename.pgn.zst))] --> id2((Uncompress)) ;
-    id2((Uncompress)) --> id3(filename.pgn) ;
-    id3(filename.pgn) --> id4((Update Config, Run process_data.py)) ;
-    id4((Update Config, Run process_data.py)) --> id5(processed.json) ;
-    id5(processed.json) --> id6((Run format_data.py)) ;
-    id6((Run format_data.py)) --> id7(processed_df.csv) ;
-    id7(processed_df.csv) --> id8((Run postprocess_data.ipynb)) ;
-    id8((Run postprocess_data.ipynb)) --> id9([feature_df.csv]) ;
-    id8((Run postprocess_data.ipynb)) --> id10([label_df.csv]) ;
-```
+[![](https://mermaid.ink/img/pako:eNqVlMtugzAQRX_FcjepRFDIO1Tqplm2mz5WgCIHjxO3YCNjktKo_14nLk2gjxRWxvfMGSNgdjiWFLCPWSK38ZoojR7noUDm4tQLAsYTECQFN1sJ9y3XaMMJuuXxGvI8ilC3e224fid4ErFMM7XfvURXlaAZWHxQs0ZHvBlYfGgkGSUa0I0UjK8cdF8IlCkZG-nCBMTNytOu_y2w-lHnMwHqPudSnIhGQT2qTjTuBHsjkyol-qcT_AbY8smx44IyN843J6WToBlWXadWmslc156FZ6VYnnY_B1rdzLxcILpQUPWJ2iq8XhAkZAlJzWAduS4T2DNmpeQL-BeT8cxBjr3rbjnVa3-YvdbpWSva653F6wX9L54Rr8n3m_rBX_Zv9LCVe9TKPW7lnrRyT8-6Q4EdnIL5ljk1k2K3rw-xXkMKIfbNkgIjRaJDHIp3g5JCy4dSxNjXqgAHF4efcc7JSpEU-4wkudkFyrVUd3b6HIbQ-wfJPoO2?type=png)](https://mermaid.live/edit#pako:eNqVlMtugzAQRX_FcjepRFDIO1Tqplm2mz5WgCIHjxO3YCNjktKo_14nLk2gjxRWxvfMGSNgdjiWFLCPWSK38ZoojR7noUDm4tQLAsYTECQFN1sJ9y3XaMMJuuXxGvI8ilC3e224fid4ErFMM7XfvURXlaAZWHxQs0ZHvBlYfGgkGSUa0I0UjK8cdF8IlCkZG-nCBMTNytOu_y2w-lHnMwHqPudSnIhGQT2qTjTuBHsjkyol-qcT_AbY8smx44IyN843J6WToBlWXadWmslc156FZ6VYnnY_B1rdzLxcILpQUPWJ2iq8XhAkZAlJzWAduS4T2DNmpeQL-BeT8cxBjr3rbjnVa3-YvdbpWSva653F6wX9L54Rr8n3m_rBX_Zv9LCVe9TKPW7lnrRyT8-6Q4EdnIL5ljk1k2K3rw-xXkMKIfbNkgIjRaJDHIp3g5JCy4dSxNjXqgAHF4efcc7JSpEU-4wkudkFyrVUd3b6HIbQ-wfJPoO2)
 
 ## Step 1: Ingesting Raw Data 
 
