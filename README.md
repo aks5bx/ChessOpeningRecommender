@@ -3,7 +3,7 @@
 
 ## _Project still in progress_ 
 
-Authors: [Adi Srikanth](https://lichess.org/@/asrikanth) and Will Gorick 
+Authors: [Adi Srikanth](https://lichess.org/@/asrikanth) and [Will Gorick](https://lichess.org/@/ooohwillem2) 
 
 Time: Winter 2023
 
