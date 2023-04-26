@@ -44,11 +44,11 @@ We have a version 1 recommender system working powered by around 200K games from
 
 You can install the required packages for this project using the command `pip install -r requirements.txt`
 
-We use Python version >= 3.8
+Note: you must use a Python version >= 3.8 in order to meet the PyTorch dependency.
 
 ## Quickstart
 
-In order to run this without having to run the entire data pipeline, go to the Google Drive and upload the files `full_feature_df.csv` and `full_labels_df.csv`. With these two files, you will be able to run the recommender system. 
+In order to run this without having to run the entire data pipeline, go to the Google Drive and download the files `full_feature_df.csv` and `full_label_df.csv`. With these two files, you will be able to run the recommender system. 
 
 See the repository structure below for details on where to store the files. 
 
@@ -58,15 +58,15 @@ See the repository structure below for details on where to store the files.
 [ROOT]
 │
 └───data 
-│   |   full_features_df.csv (must upload - available in google drive)
-│   |   full_labels_df.csv (must upload - available in google drive)
+│   |   full_feature_df.csv (must download - available in google drive)
+│   |   full_label_df.csv (must download - available in google drive)
 │   |   lichess_2019_06.pgn (*)
 │   |   lichess_2015_06.pgn (*)
 │   |   lichess_2013_06.pgn (*)
 │   |   processed_2019_06.json (**)
 │   |   processed_2019_06_df.csv (**)
 │   |
-│   |   * - must upload yourself, but only necessary to run full data pipeline
+│   |   * - must download yourself, but only necessary to run full data pipeline
 │   |   ** - generated during full data pipeline process
 │
 └───src
@@ -118,7 +118,7 @@ Next, we run our data through the `process_data.py` script. This handles the fol
 
 In order to run this file, you must first update the `config.json` file to make sure the data stored under `live_run` points to your saved pgn file. Specifically, the `dataset_file` key should point to your pgn filename. The `processsed_file` key can point to any filename, but should generally follow naming conventions. 
 
-Additionally, the `dataset` key points to the name of the dataset, which is also another nested data categority in the config file. Here, fill in the number of games (which you can find on the lichess database) and the number of lines in your file, which you can compute by running `wc -l <filename>` in your terminal. 
+Additionally, the `dataset` key points to the name of the dataset, which is also another nested data category in the config file. Here, fill in the number of games (which you can find on the lichess database) and the number of lines in your file, which you can compute by running `wc -l <filename>` in your terminal. 
 
 At this point, you can go ahead and run: `python src/process_data.py`
 
