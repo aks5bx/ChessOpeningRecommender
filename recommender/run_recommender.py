@@ -147,12 +147,12 @@ def main(args):
     print('——' * 25)
 
 def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--epochs", "-e", type=int, default=10)
-    parser.add_argument("--batch_size", "-b", type=int, default=64)
-    parser.add_argument("--alpha", "-a", type=float, default=0.001)
-    parser.add_argument("--write", "-w", type=str, default='Y')
-    parser.add_argument("--loss", "-l", type=str, default='MSE')
+    parser = argparse.ArgumentParser(add_help=True)
+    parser.add_argument("--epochs", "-e", type=int, default=10, help="number of training epochs to perform")
+    parser.add_argument("--batch_size", "-b", type=int, default=64, help="the batch size to load with torch.utils.data.DataLoader")
+    parser.add_argument("--alpha", "-a", type=float, default=0.001, help="value of the hyperparameter alpha")
+    parser.add_argument("--write", "-w", type=str, default='Y', help="whether to save the model, 'Y' will save")
+    parser.add_argument("--loss", "-l", type=str, default='MSE') #passed to the test() function and then unused
 
     return parser.parse_args()
 
